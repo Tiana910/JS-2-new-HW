@@ -33,9 +33,9 @@
             </div>
         </div>
         <div>
-            <input type="radio" id="operand-one" value="operand-one" v-model="checkApp">
+            <input type="radio" id="operand-one" value="operand-one" v-model.number="checkApp">
             <label for="operand-one">Операнд 1</label>
-            <input type="radio" id="operand-two" value="operand-two" v-model="checkApp">
+            <input type="radio" id="operand-two" value="operand-two" v-model.number="checkApp">
             <label for="operand-two">Операнд 2</label>
         </div>
     </div>
@@ -53,7 +53,7 @@ export default {
             operands: ["+", "-", "/", "*", "**", "%"],
             error: '',
             checkApp: false,
-            keyboard: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '←'],
+            keyboard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '←'],
             checked: 'Отобразить экранную клавиатуру',
             picked: '',
             numberKey: true,
@@ -135,7 +135,7 @@ export default {
 
         add() {
             const { op1, op2 } = this;
-            this.result = op1 + op2;
+            this.result = Number(op1) + Number(op2);
         },
         sub() {
             const { op1, op2 } = this;
