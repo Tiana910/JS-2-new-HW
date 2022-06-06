@@ -9,7 +9,7 @@
             </label>
             = {{ result }}
         </div>
-        <div v-show="error">{{ error }}</div>
+        <div class="error" v-show="error">{{ error }}</div>
         <div class="keyboard">
             <!-- <button @click="result = op1 + op2">+</button>
             <button @click="sub">-</button>
@@ -117,18 +117,18 @@ export default {
             arr.pop();
             return arr.join('');
         },
-        addKey(numberKey) {
+        addKey(value) {
             if (this.checkApp === 'operand-one' && value !== '←') {
                 this.op1 = this.numberKeyPush(this.op1, value)
             }
             if (this.checkApp === 'operand-two' && value !== '←') {
-                this.op1 = this.numberKeyPush(this.op2, value)
+                this.op2 = this.numberKeyPush(this.op2, value)
             }
             if (this.checkApp === 'operand-one' && value === '←') {
                 this.op1 = this.numberKeyPop(this.op1, value)
             }
             if (this.checkApp === 'operand-two' && value === '←') {
-                this.op1 = this.numberKeyPop(this.op2, value)
+                this.op2 = this.numberKeyPop(this.op2, value)
             }
         },
 
@@ -177,5 +177,9 @@ button {
 input {
     display: inline-block;
     margin: 10px 15px;
+}
+
+.error {
+    color: red;
 }
 </style>
