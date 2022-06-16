@@ -7,7 +7,7 @@
             <div><b>Date</b></div>
         </div>
         <div class="item" v-for="(item, index) in items" :key="index">
-            <div>{{ idx + 1 }}</div>
+            <div>{{ index + 1 }}</div>
             <div>{{ item.amount }}</div>
             <div>{{ item.category }}</div>
             <div>{{ item.date }}</div>
@@ -37,28 +37,22 @@ export default {
 
 <style scoped >
 .item {
-    display: grid;
-    grid-template-columns: 40px repeat(auto-fill, 110px);
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
     border-bottom: 1px solid grey;
 }
 
 .title {
     display: flex;
     justify-content: space-evenly;
-    text-align: center;
+    /* text-align: center; */
     border-bottom: 1px solid grey;
     padding: 7px 5px;
 
 }
 
-
-.wrapper-item {
-
-    text-align: center;
-
-}
-
-.containr {
+.container {
     width: 900px;
 
 }
