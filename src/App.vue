@@ -4,8 +4,8 @@
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <div class="wrapper">
       <div class="header">My personal costs</div>
-      <add-payment-form @add-payment="addNewPayment" :categoryList="categoryList"></add-payment-form>
-      <payments-display :items="payentsList"></payments-display>
+      <add-payment-form @add-payment-form="addNewPayment" :categoryList="categoryList"></add-payment-form>
+      <payments-display :items="paymentsList"></payments-display>
     </div>
   </div>
 </template>
@@ -21,7 +21,8 @@ export default {
   data() {
     return {
       show: true,
-      paymentsList: [],
+      // paymentsList: [],
+      categoryList: [],
     }
   },
   methods: {
@@ -30,27 +31,27 @@ export default {
         {
           date: '28.01.2020',
           category: 'Food',
-          value: 169,
+          amount: 169,
         },
         {
           date: '24.03.2020',
           category: 'Transport',
-          value: 360,
+          amount: 360,
         },
         {
           date: '24.03.2020',
           category: 'Food',
-          value: 532,
+          amount: 532,
         },
         {
           date: "17.02.2020",
           category: "Internet",
-          value: 97,
+          amount: 97,
         },
         {
           date: "5.09.2020",
           category: "Sport",
-          value: 82,
+          amount: 82,
         },
       ];
     },
@@ -79,7 +80,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  
+
 }
 
 .header {
@@ -87,6 +88,4 @@ export default {
   font-weight: 600;
   padding-bottom: 15px;
 }
-
-
 </style>
