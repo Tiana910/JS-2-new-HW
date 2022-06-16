@@ -2,23 +2,23 @@
     <div class="wrapper">
         <button class="btn btn-info" type="button" @click="isVisible = !isVisible">ADD NEW COST+</button><br>
         <div class="add-cost" v-show="isVisible">
-
+            <label for="amount">
+                <input id="amount" type="number" placeholder="Amount" v-model.number="amount">
+            </label>
+            <label for="category">
+                <!--      <input id="type" type="text" placeholder="Type" v-model="type">-->
+                <select v-model="category" id="category">
+                    <option v-for="category of categoryList" :value="category" :key="category">
+                        {{ category }}
+                    </option>
+                </select>
+            </label>
+            <label for="date">
+                <input id="date" type="text" placeholder="Date" v-model="date">
+            </label>
+            <button @click="addPayment">Add payment.</button>
         </div>
-        <label for="amount">
-            <input id="amount" type="number" placeholder="Amount" v-model.number="amount">
-        </label>
-        <label for="category">
-            <!--      <input id="type" type="text" placeholder="Type" v-model="type">-->
-            <select v-model="category" id="category">
-                <option v-for="category of categoryList" :value="category" :key="category">
-                    {{ category }}
-                </option>
-            </select>
-        </label>
-        <label for="date">
-            <input id="date" type="text" placeholder="Date" v-model="date">
-        </label>
-        <button @click="addPayment">Add payment. Save.</button>
+
     </div>
 </template>
 
@@ -56,7 +56,7 @@ export default {
                 category: this.category,
                 date: this.date || this.paymentDate,
             };
-            this.$emit('addPayment', data)
+            this.$emit('add-payment-form', data)
         }
     }
 }
