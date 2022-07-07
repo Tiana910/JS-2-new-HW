@@ -54,7 +54,7 @@ export default {
     addPayment() {
       const data = {
         value: +this.value,
-        type: this.type,
+        category: this.type,
         date: this.date || this.paymentDate,
       };
 
