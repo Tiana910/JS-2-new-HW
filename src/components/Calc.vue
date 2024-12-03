@@ -9,30 +9,34 @@
             </label>
             = {{ result }}
         </div>
-        <div v-show="error">{{ error }}</div>
+        <div class="error" v-show="error">{{ error }}</div>
         <div class="keyboard">
-            <button @click="result = op1 + op2">+</button>
+            <!-- <button @click="result = op1 + op2">+</button>
             <button @click="sub">-</button>
             <button @click="div">/</button>
             <button @click="mult">*</button>
             <button @click="pow">**</button>
-            <button @click="rem">%</button>
+            <button @click="rem">%</button> -->
+            <button v-for="operand in operands" :key="operand" :title="operand" @click="calculate(operand)">
+                {{ operand }}
+            </button>
         </div>
         <!-- <div v-if="error">{{ error }}</div> -->
-        <div>
-            <input type="checkbox" id="checked" v-model="checked">
-            <label for="checked">{{ checked }}</label>
+        <div class="numberKeyboard">
+            <label for="checked">{{ checked }}
+                <input type="checkbox" id="checked" v-model="numberKey">
+            </label>
+            <div v-if="numberKey">
+                <button v-for="numberKey in keyboard" :key="numberKey" title="numberKey" @click="addKey(numberKey)">
+                    {{ numberKey }}
+                </button>
+            </div>
         </div>
         <div>
-            <button v-for="(number, index) of numbers" :key="index" @click="numberPlus">
-                {{ number }}</button>
-            <button>&#8678;</button>
-        </div>
-        <div>
-            <input type="radio" id="op1" value="Один" v-model="picked" :key="op1">
-            <label for="op1">Операнд 1</label>
-            <input type="radio" id="op2" value="Два" v-model="picked" :key="op2">
-            <label for="op2">Операнд 2</label>
+            <input type="radio" id="operand-one" value="operand-one" v-model="checkApp">
+            <label for="operand-one">Операнд 1</label>
+            <input type="radio" id="operand-two" value="operand-two" v-model="checkApp">
+            <label for="operand-two">Операнд 2</label>
         </div>
     </div>
 </template>
@@ -46,42 +50,118 @@ export default {
             op1: 0,
             op2: 0,
             result: 0,
+            operands: ["+", "-", "/", "*", "**", "%"],
             error: '',
-            numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9,],
+            checkApp: false,
+            keyboard: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '←'],
             checked: 'Отобразить экранную клавиатуру',
-            picked: ''
-
+            picked: '',
+            numberKey: true,
         }
     },
     methods: {
+        // sub() {
+        //     this.error = '';
+        //     this.result = this.op1 - this.op2;
+        // },
+        // div() {
+        //     this.error = '';
+        //     if (this.op2 === 0) {
+        //         this.error = 'На ноль делить нельзя';
+        //         return;
+        //     }
+        //     this.result = this.op1 / this.op2;
+        // },
+        // mult() {
+        //     this.error = '';
+        //     this.result = this.op1 * this.op2;
+        // },
+        // pow() {
+        //     this.error = '';
+        //     this.result = this.op1 ** this.op2;
+        // },
+        // rem() {
+        //     this.error = '';
+        //     this.result = this.op1 % this.op2;
+        // },
+        calculate(operation = "+") {
+            this.error = "";
+            switch (operation) {
+                case "+":
+                    this.add();
+                    break;
+                case "-":
+                    this.sub();
+                    break;
+                case "/":
+                    this.div();
+                    break;
+                case "*":
+                    this.multi();
+                    break;
+                case "**/":
+                    this.pow();
+                    break;
+                case "%":
+                    this.rem();
+                    break;
+            }
+        },
+        numberKeyPush(target, value) {
+            let arr = Array.from(target);
+            arr.push(value);
+            return arr.join('');
+        },
+        numberKeyPop(target) {
+            let arr = Array.from(target);
+            arr.pop();
+            return arr.join('');
+        },
+        addKey(value) {
+            if (this.checkApp === 'operand-one' && value !== '←') {
+                this.op1 = this.numberKeyPush(this.op1, value)
+            }
+            if (this.checkApp === 'operand-two' && value !== '←') {
+                this.op2 = this.numberKeyPush(this.op2, value)
+            }
+            if (this.checkApp === 'operand-one' && value === '←') {
+                this.op1 = this.numberKeyPop(this.op1, value)
+            }
+            if (this.checkApp === 'operand-two' && value === '←') {
+                this.op2 = this.numberKeyPop(this.op2, value)
+            }
+        },
+
+
+        add() {
+            const { op1, op2 } = this;
+            this.result = op1 + op2;
+        },
         sub() {
-            this.error = '';
-            this.result = this.op1 - this.op2;
+            const { op1, op2 } = this;
+            this.result = op1 - op2;
         },
         div() {
-            this.error = '';
-            if (this.op2 === 0) {
-                this.error = 'На ноль делить нельзя';
+            const { op1, op2 } = this;
+            if (op2 === 0) {
+                this.error = "Делить на 0 нельзя!";
                 return;
             }
-            this.result = this.op1 / this.op2;
+            this.result = op1 / op2;
         },
-        mult() {
-            this.error = '';
-            this.result = this.op1 * this.op2;
+        multi() {
+            const { op1, op2 } = this;
+            this.result = op1 * op2;
         },
         pow() {
-            this.error = '';
-            this.result = this.op1 ** this.op2;
+            const { op1, op2 } = this;
+            this.result = op1 ** op2;
         },
         rem() {
-            this.error = '';
-            this.result = this.op1 % this.op2;
+            const { op1, op2 } = this;
+            this.result = op1 % op2;
         },
-        numberPlus() {
-            for (let num = 0; num <= 9; num++);
-            console.log(num);
-        }
+
     },
 };
 </script>
@@ -97,5 +177,9 @@ button {
 input {
     display: inline-block;
     margin: 10px 15px;
+}
+
+.error {
+    color: red;
 }
 </style>
